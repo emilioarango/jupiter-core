@@ -5,42 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3MILIONAIRE Empire</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .hero-bg { background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat; }
+    body {
+      background-color: #000000;
+      color: #00ff41;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
+    
+    .matrix-text {
+      font-size: 4.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5rem;
+      text-shadow: 0 0 20px #00ff41,
+                   0 0 40px #00ff41;
+    }
+
+    .ellipsis {
+      display: inline-block;
+      width: 60px;
+      text-align: left;
+    }
   </style>
 </head>
-<body class="bg-zinc-950 text-white">
-  <div class="hero-bg min-h-screen flex items-center justify-center">
-    <div class="max-w-3xl mx-auto text-center px-6">
-      <div class="flex justify-center mb-8">
-        <div class="border-2 border-red-600 bg-zinc-900 text-white text-4xl font-bold tracking-widest px-8 py-3 rounded-2xl flex items-center gap-3">
-          <span class="text-5xl">3M</span>
-          <span class="text-amber-400">EMPIRE</span>
-        </div>
-      </div>
-
-      <h1 class="text-7xl font-bold tracking-tighter mb-4">3MILIONAIRE EMPIRE</h1>
-      <p class="text-3xl text-zinc-400 mb-12">Lock in.<br>Command.<br>Build Empire.</p>
-
-      <div class="max-w-md mx-auto text-lg text-zinc-300 mb-16">
-        AI-powered wealth protocols.<br>
-        Unbreakable discipline systems.<br>
-        America-First takes for the man who thinks like a Roman emperor,<br>
-        moves like a chess grandmaster,<br>
-        and drives a WRX STI through SoCal canyons.
-      </div>
-
-      <a href="https://3milionaire.substack.com" 
-         target="_blank"
-         class="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 transition-all text-white text-2xl font-semibold px-12 py-6 rounded-3xl">
-        <span>ENTER THE EMPIRE</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-
-      <p class="text-xs text-zinc-500 mt-16">© 2026 3MILIONAIRE • Irvine, CA</p>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="text-center">
+    <div class="matrix-text">
+      COMING SOON
+      <span class="ellipsis" id="ellipsis">...</span>
     </div>
   </div>
+
+  <script>
+    const ellipsis = document.getElementById('ellipsis');
+    let dots = 3;
+    
+    setInterval(() => {
+      dots = (dots % 3) + 1;
+      ellipsis.textContent = '.'.repeat(dots);
+    }, 800);
+  </script>
 </body>
 </html>
