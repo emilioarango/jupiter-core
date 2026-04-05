@@ -9,17 +9,22 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --red:  #b01c1c;
-  --blue: #1a3a6b;
-  --white: #ffffff;
-  --off:  #f7f4ef;
-  --mid:  #b8b0a4;
-  --muted:#888078;
+  --red:   #d42020;
+  --red-dim:#8b1a1a;
+  --blue:  #4a7fd4;
+  --blue-dim:#1e3a5f;
+  --bg:    #0a0a0a;
+  --bg2:   #111111;
+  --bg3:   #181818;
+  --border:#222222;
+  --mid:   #555555;
+  --muted: #666666;
+  --text:  #e8e2d9;
 }
 
 body {
-  background: var(--white);
-  color: var(--blue);
+  background: var(--bg);
+  color: var(--text);
   font-family: 'IM Fell English', 'Times New Roman', serif;
   overflow-x: hidden;
   cursor: none;
@@ -35,21 +40,21 @@ body {
   position: fixed; width: 32px; height: 32px;
   border: 1px solid var(--blue); border-radius: 50%;
   pointer-events: none; z-index: 9998;
-  transform: translate(-50%,-50%); opacity: 0.4;
+  transform: translate(-50%,-50%); opacity: 0.6;
 }
 
 nav {
   position: fixed; top:0; left:0; right:0; z-index:200;
   display:flex; justify-content:space-between; align-items:center;
   padding: 1.6rem 3rem;
-  background: rgba(255,255,255,0.92);
+  background: rgba(10,10,10,0.92);
   backdrop-filter: blur(10px);
-  border-bottom: 0.5px solid rgba(26,58,107,0.08);
+  border-bottom: 0.5px solid var(--border);
 }
 .nav-logo {
   font-family: 'Playfair Display', serif; font-weight:900;
   font-size:0.85rem; letter-spacing:0.28em;
-  color: var(--blue); text-decoration:none; text-transform:uppercase;
+  color: var(--text); text-decoration:none; text-transform:uppercase;
 }
 .nav-logo .n3 { color: var(--red); }
 .nav-links { display:flex; gap:2.5rem; list-style:none; }
@@ -58,7 +63,7 @@ nav {
   font-size:0.82rem; color:var(--muted); text-decoration:none;
   transition:color 0.22s;
 }
-.nav-links a:hover { color:var(--blue); }
+.nav-links a:hover { color:var(--text); }
 
 /* HERO — full viewport, canvas fills it */
 .hero {
@@ -97,12 +102,11 @@ nav {
   font-weight:900;
   font-size: clamp(2rem, 6vw, 5rem);
   letter-spacing: 0.28em;
-  color: var(--blue);
+  color: var(--text);
   text-transform: uppercase;
   line-height: 1;
   animation: fadeUp 1s ease 0.7s both;
-  /* subtle shadow so it reads over canvas */
-  text-shadow: 0 2px 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,1);
+  text-shadow: 0 2px 30px rgba(0,0,0,0.8), 0 0 60px rgba(0,0,0,1);
 }
 .hero-title .n3 { color: var(--red); }
 
@@ -111,7 +115,7 @@ nav {
   margin: 1.2rem 0;
   animation: fadeUp 1s ease 0.9s both;
 }
-.orn-line    { width:55px; height:1px; background:rgba(184,176,164,0.6); }
+.orn-line    { width:55px; height:1px; background:rgba(255,255,255,0.12); }
 .orn-diamond { width:5px; height:5px; background:var(--red); transform:rotate(45deg); }
 .orn-star    { color:var(--red); font-size:0.65rem; }
 
@@ -133,9 +137,9 @@ nav {
 }
 .scroll-hint span {
   font-family:'IM Fell English',serif; font-style:italic;
-  font-size:0.6rem; letter-spacing:0.3em; color:var(--mid);
+  font-size:0.6rem; letter-spacing:0.3em; color:var(--muted);
 }
-.scroll-line { width:1px; height:40px; background:var(--light,#ede9e1); position:relative; overflow:hidden; }
+.scroll-line { width:1px; height:40px; background:var(--border); position:relative; overflow:hidden; }
 .scroll-line::after {
   content:''; position:absolute; top:-100%; left:0; right:0; height:100%;
   background:var(--blue); animation:drip 2s ease-in-out infinite;
@@ -147,7 +151,7 @@ nav {
   position:absolute; bottom:4.5rem; left:50%;
   transform:translateX(-50%);
   font-family:'IM Fell English',serif; font-style:italic;
-  font-size:0.62rem; letter-spacing:0.22em; color:var(--mid);
+  font-size:0.62rem; letter-spacing:0.22em; color:var(--muted);
   z-index:10; pointer-events:none;
   animation: fadeUp 1s ease 2s both;
   white-space: nowrap;
@@ -157,7 +161,7 @@ nav {
 .divider {
   display:flex; align-items:center; gap:1rem; padding:0 3rem;
 }
-.div-line { flex:1; height:0.5px; background:#ede9e1; }
+.div-line { flex:1; height:0.5px; background:var(--border); }
 .div-star { color:var(--red); font-size:0.6rem; }
 
 section.content {
@@ -170,12 +174,12 @@ section.content {
   margin-bottom:2.5rem;
   display:flex; align-items:center; gap:1rem;
 }
-.sec-label::after { content:''; flex:1; height:0.5px; background:#ede9e1; max-width:60px; }
+.sec-label::after { content:''; flex:1; height:0.5px; background:var(--border); max-width:60px; }
 
-.pillars { display:grid; grid-template-columns:repeat(3,1fr); border:0.5px solid #ede9e1; }
+.pillars { display:grid; grid-template-columns:repeat(3,1fr); border:0.5px solid var(--border); }
 .pillar {
   padding:2.2rem 1.8rem;
-  border-right:0.5px solid #ede9e1;
+  border-right:0.5px solid var(--border);
   position:relative; overflow:hidden; transition:background 0.3s;
 }
 .pillar:last-child { border-right:none; }
@@ -185,56 +189,57 @@ section.content {
 }
 .pillar:nth-child(1)::after,.pillar:nth-child(3)::after { background:var(--red); }
 .pillar:nth-child(2)::after { background:var(--blue); }
-.pillar:hover { background:#f8f5f0; }
+.pillar:hover { background:var(--bg3); }
 .pillar:hover::after { transform:scaleX(1); }
 .pillar-num {
   font-family:'Times New Roman',serif; font-weight:900;
   font-size:3.5rem; line-height:1; margin-bottom:1rem;
 }
-.pillar:nth-child(odd) .pillar-num  { color:rgba(176,28,28,0.1); }
-.pillar:nth-child(even) .pillar-num { color:rgba(26,58,107,0.1); }
+.pillar:nth-child(odd) .pillar-num  { color:rgba(212,32,32,0.15); }
+.pillar:nth-child(even) .pillar-num { color:rgba(74,127,212,0.15); }
 .pillar-title {
   font-family:'Playfair Display',serif; font-weight:700;
   font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase;
-  color:#0e0e0e; margin-bottom:0.7rem;
+  color:var(--text); margin-bottom:0.7rem;
 }
 .pillar-body {
   font-family:'IM Fell English',serif; font-style:italic;
-  font-size:0.92rem; color:#888078; line-height:1.75;
+  font-size:0.92rem; color:var(--muted); line-height:1.75;
 }
 
 .quote-block {
-  background:var(--blue);
+  background: var(--bg2);
   width:100vw; margin-left:calc(-50vw + 50%);
   padding:5.5rem 3rem; position:relative; overflow:hidden;
+  border-top:0.5px solid var(--border); border-bottom:0.5px solid var(--border);
 }
 .quote-block::before {
   content:'"'; position:absolute;
   font-family:'Times New Roman',serif; font-size:38rem;
-  color:rgba(255,255,255,0.025); line-height:1;
+  color:rgba(255,255,255,0.02); line-height:1;
   top:-3rem; left:-1rem; pointer-events:none;
 }
 .quote-inner { max-width:680px; margin:0 auto; text-align:center; position:relative; z-index:1; }
 .q-stars { display:flex; justify-content:center; gap:0.5rem; margin-bottom:1.5rem; }
-.q-star  { color:#d42020; font-size:0.72rem; }
+.q-star  { color:var(--red); font-size:0.72rem; }
 .quote-text {
   font-family:'Playfair Display','Times New Roman',serif; font-style:italic;
-  font-size:clamp(1.15rem,2.4vw,1.7rem); color:#fff; line-height:1.7; margin-bottom:1.8rem;
+  font-size:clamp(1.15rem,2.4vw,1.7rem); color:var(--text); line-height:1.7; margin-bottom:1.8rem;
 }
 .quote-attr {
   font-family:'IM Fell English',serif; font-style:italic;
-  font-size:0.75rem; letter-spacing:0.25em; color:rgba(255,255,255,0.38);
+  font-size:0.75rem; letter-spacing:0.25em; color:var(--muted);
 }
 
 .interests-grid {
   display:grid; grid-template-columns:repeat(2,1fr);
-  gap:1px; background:#ede9e1; border:0.5px solid #ede9e1;
+  gap:1px; background:var(--border); border:0.5px solid var(--border);
 }
 .int-item {
-  background:#fff; padding:1.6rem 2rem;
+  background:var(--bg); padding:1.6rem 2rem;
   display:flex; align-items:flex-start; gap:1rem; transition:background 0.28s;
 }
-.int-item:hover { background:#f8f5f0; }
+.int-item:hover { background:var(--bg3); }
 .int-star { color:var(--red); font-size:0.6rem; margin-top:5px; flex-shrink:0; }
 .int-label {
   font-family:'Playfair Display',serif; font-weight:700;
@@ -243,22 +248,21 @@ section.content {
 }
 .int-desc {
   font-family:'IM Fell English',serif; font-style:italic;
-  font-size:0.88rem; color:#888078; line-height:1.6;
+  font-size:0.88rem; color:var(--muted); line-height:1.6;
 }
 
 footer {
-  background:var(--blue); width:100vw; margin-left:calc(-50vw + 50%);
+  background:var(--bg2); width:100vw; margin-left:calc(-50vw + 50%);
   padding:2.2rem 3rem;
   display:flex; justify-content:space-between; align-items:center;
-  border-top:2px solid var(--red);
+  border-top:1px solid var(--red-dim);
 }
 .footer-brand {
   font-family:'Playfair Display',serif; font-weight:900;
-  font-size:0.82rem; letter-spacing:0.22em; color:#fff; text-transform:uppercase;
+  font-size:0.82rem; letter-spacing:0.22em; color:var(--text); text-transform:uppercase;
 }
-.footer-brand .n3 { color:#d42020; }
-.footer-motto { font-family:'IM Fell English',serif; font-style:italic; font-size:0.92rem; color:rgba(255,255,255,0.38); }
-.footer-copy  { font-family:'IM Fell English',serif; font-style:italic; font-size:0.65rem; color:rgba(255,255,255,0.2); letter-spacing:0.08em; }
+.footer-brand .n3 { color:var(--red); }
+.footer-copy  { font-family:'IM Fell English',serif; font-style:italic; font-size:0.65rem; color:var(--muted); letter-spacing:0.08em; }
 
 @keyframes fadeUp{ from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 
@@ -269,7 +273,7 @@ footer {
 @media(max-width:700px){
   nav{padding:1.2rem 1.5rem} .nav-links{display:none}
   .pillars,.interests-grid{grid-template-columns:1fr}
-  .pillar{border-right:none;border-bottom:0.5px solid #ede9e1}
+  .pillar{border-right:none;border-bottom:0.5px solid var(--border)}
   footer{flex-direction:column;gap:0.75rem;text-align:center}
   section.content{padding:4rem 1.5rem}
 }
@@ -377,11 +381,11 @@ footer {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
-  renderer.setClearColor(0xffffff, 1);
+  renderer.setClearColor(0x0a0a0a, 1);
 
   /* ── SCENE ── */
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffffff);
+  scene.background = new THREE.Color(0x0a0a0a);
 
   /* ── CAMERA ── */
   const camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 200);
@@ -389,10 +393,10 @@ footer {
   camera.lookAt(0, 0.5, 0);
 
   /* ── COLOURS ── */
-  const RED    = 0xb01c1c;
-  const BLUE   = 0x1a3a6b;
+  const RED    = 0xd42020;
+  const BLUE   = 0x4a7fd4;
   const WHITE  = 0xffffff;
-  const OFFWHT = 0xf7f4ef;
+  const OFFWHT = 0x1a1a1a;
   const GOLD   = 0xc9a84c;
 
   /* ── PYRAMID GEOMETRY ── */
@@ -407,29 +411,29 @@ footer {
   // Three.js r128 ConeGeometry: side faces are indices 0..3, bottom cap is last group
   // We'll use a single material with vertex colors for the faces
   const pyMat = new THREE.MeshPhongMaterial({
-    color:     0xf2ede4,
-    emissive:  0x000000,
-    specular:  0xffffff,
-    shininess: 18,
+    color:     0x1a1a1a,
+    emissive:  0x050505,
+    specular:  0x4a7fd4,
+    shininess: 35,
     flatShading: true,
   });
 
   const pyramid = new THREE.Mesh(pyGeo, pyMat);
-  pyramid.rotation.y = Math.PI / 4; // rotate 45° so corner faces camera
+  pyramid.rotation.y = Math.PI / 4;
   pyramid.castShadow    = true;
   pyramid.receiveShadow = true;
   pyramid.position.y    = 0.2;
   scene.add(pyramid);
 
-  /* Edge wireframe overlay for that geometric crisp look */
+  /* Edge wireframe — bright blue on dark */
   const edgesGeo = new THREE.EdgesGeometry(pyGeo);
-  const edgesMat = new THREE.LineBasicMaterial({ color: BLUE, linewidth: 1 });
+  const edgesMat = new THREE.LineBasicMaterial({ color: 0x4a7fd4, linewidth: 1 });
   const edges    = new THREE.LineSegments(edgesGeo, edgesMat);
   pyramid.add(edges);
 
   /* ── GROUND PLANE (subtle shadow catcher) ── */
   const groundGeo = new THREE.PlaneGeometry(30, 30);
-  const groundMat = new THREE.ShadowMaterial({ opacity: 0.08 });
+  const groundMat = new THREE.ShadowMaterial({ opacity: 0.5 });
   const ground    = new THREE.Mesh(groundGeo, groundMat);
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = -1.5;
@@ -438,7 +442,7 @@ footer {
 
   /* Faint ground reflection line */
   const lineGeo = new THREE.PlaneGeometry(5.5, 0.005);
-  const lineMat = new THREE.MeshBasicMaterial({ color: BLUE, opacity:0.12, transparent:true });
+  const lineMat = new THREE.MeshBasicMaterial({ color: 0x4a7fd4, opacity:0.2, transparent:true });
   const baseline= new THREE.Mesh(lineGeo, lineMat);
   baseline.rotation.x = -Math.PI/2;
   baseline.position.y = -1.48;
@@ -456,17 +460,16 @@ footer {
   }
   const partGeo = new THREE.BufferGeometry();
   partGeo.setAttribute('position', new THREE.BufferAttribute(partPositions, 3));
-  const partMat = new THREE.PointsMaterial({ color: BLUE, size:0.04, opacity:0.35, transparent:true });
+  const partMat = new THREE.PointsMaterial({ color: 0x4a7fd4, size:0.05, opacity:0.5, transparent:true });
   const particles = new THREE.Points(partGeo, partMat);
   scene.add(particles);
 
   /* ── LIGHTS ── */
-  // Ambient — soft overall fill
-  const ambient = new THREE.AmbientLight(0xffffff, 0.55);
+  const ambient = new THREE.AmbientLight(0xffffff, 0.15);
   scene.add(ambient);
 
-  // Key light — warm directional from upper right
-  const keyLight = new THREE.DirectionalLight(0xfff8f0, 1.1);
+  /* Key light — cool blue-white from upper right */
+  const keyLight = new THREE.DirectionalLight(0xc8d8ff, 1.4);
   keyLight.position.set(6, 10, 6);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(1024,1024);
@@ -476,15 +479,20 @@ footer {
   keyLight.shadow.camera.right= keyLight.shadow.camera.top    =  8;
   scene.add(keyLight);
 
-  // Fill light — cool blue from left
-  const fillLight = new THREE.DirectionalLight(0xd0e0ff, 0.45);
+  /* Fill light — deep blue from left */
+  const fillLight = new THREE.DirectionalLight(0x1a3a8f, 0.8);
   fillLight.position.set(-5, 4, -3);
   scene.add(fillLight);
 
-  // Red rim light from below-back for drama
-  const rimLight = new THREE.PointLight(RED, 0.6, 12);
+  /* Red rim light from below-back for drama */
+  const rimLight = new THREE.PointLight(RED, 1.2, 14);
   rimLight.position.set(0, -3, -4);
   scene.add(rimLight);
+
+  /* Subtle top blue point for apex glow */
+  const topLight = new THREE.PointLight(0x6699ff, 0.8, 8);
+  topLight.position.set(0, 6, 2);
+  scene.add(topLight);
 
   /* ── DRAG TO ROTATE ── */
   let isDragging = false;
