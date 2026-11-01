@@ -66,6 +66,35 @@ nav {
 }
 .nav-links a:hover { color:var(--text); }
 
+.nav-hamburger {
+  display:none; flex-direction:column; justify-content:center; gap:5px;
+  width:28px; height:28px; background:none; border:none; cursor:pointer;
+  padding:0; z-index:201;
+}
+.nav-hamburger span {
+  display:block; width:100%; height:1px; background:var(--text);
+  transition:transform 0.3s ease, opacity 0.3s ease;
+  transform-origin:center;
+}
+.nav-hamburger.open span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2){ opacity:0; }
+.nav-hamburger.open span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
+
+.nav-mobile {
+  display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(10,10,10,0.97); z-index:199;
+  flex-direction:column; align-items:center; justify-content:center; gap:3rem;
+}
+.nav-mobile.open { display:flex; }
+.nav-mobile a {
+  font-family:'Playfair Display',serif; font-weight:900;
+  font-size:clamp(1.4rem,6vw,2rem); letter-spacing:0.2em;
+  color:var(--muted); text-decoration:none; text-transform:uppercase;
+  transition:color 0.22s;
+}
+.nav-mobile a:hover { color:var(--text); }
+.nav-mobile .nav-divider { width:40px; height:0.5px; background:var(--border); }
+
 /* HERO — full viewport, canvas fills it */
 .hero {
   position: relative;
@@ -277,7 +306,7 @@ footer {
 }
 
 @media(max-width:700px){
-  nav{padding:1.2rem 1.5rem} .nav-links{display:none}
+  nav{padding:1.2rem 1.5rem} .nav-links{display:none} .nav-hamburger{display:flex}
   .pillars,.interests-grid{grid-template-columns:1fr}
   .pillar{border-right:none;border-bottom:0.5px solid var(--border)}
   footer{flex-direction:column;gap:0.75rem;text-align:center}
@@ -296,6 +325,15 @@ footer {
     <li><a href="#pillars">Pillars</a></li>
     <li><a href="#interests">Interests</a></li>
   </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<nav class="nav-mobile" id="nav-mobile" aria-hidden="true">
+  <a href="#pillars" class="nav-mobile-link">Pillars</a>
+  <div class="nav-divider"></div>
+  <a href="#interests" class="nav-mobile-link">Interests</a>
 </nav>
 
 <!-- HERO with Three.js canvas -->
@@ -603,6 +641,29 @@ footer {
   },{threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
+})();
+
+/* ── MOBILE NAV ── */
+(function(){
+  const btn    = document.getElementById('nav-hamburger');
+  const menu   = document.getElementById('nav-mobile');
+  if(!btn || !menu) return;
+
+  function toggleMenu(open){
+    btn.classList.toggle('open', open);
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    menu.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  btn.addEventListener('click', ()=> toggleMenu(!btn.classList.contains('open')));
+
+  // Close on link click or Escape
+  menu.querySelectorAll('.nav-mobile-link').forEach(a=>{
+    a.addEventListener('click', ()=> toggleMenu(false));
+  });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') toggleMenu(false); });
 })();
 </script>
 </body>
