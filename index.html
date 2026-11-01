@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="3MILIONAIRE — Conquest, Legacy, Velocity. Strategy, stoicism, and the cutting edge."/>
 <title>3MILIONAIRE</title>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Playfair+Display:wght@900&display=swap" rel="stylesheet"/>
 <style>
@@ -17,7 +18,6 @@
   --bg2:   #111111;
   --bg3:   #181818;
   --border:#222222;
-  --mid:   #555555;
   --muted: #666666;
   --text:  #e8e2d9;
 }
@@ -48,6 +48,7 @@ nav {
   display:flex; justify-content:space-between; align-items:center;
   padding: 1.6rem 3rem;
   background: rgba(10,10,10,0.92);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 0.5px solid var(--border);
 }
@@ -270,6 +271,11 @@ footer {
 .reveal.visible { opacity:1; transform:translateY(0); }
 .d1{transition-delay:0.08s} .d2{transition-delay:0.18s} .d3{transition-delay:0.28s}
 
+@media(pointer:coarse){
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+
 @media(max-width:700px){
   nav{padding:1.2rem 1.5rem} .nav-links{display:none}
   .pillars,.interests-grid{grid-template-columns:1fr}
@@ -285,7 +291,7 @@ footer {
 <div class="cursor-ring" id="cursor-ring"></div>
 
 <nav>
-  <a href="#" class="nav-logo"><span class="n3">3</span>MILIONAIRE</a>
+  <a href="/" class="nav-logo"><span class="n3">3</span>MILIONAIRE</a>
   <ul class="nav-links">
     <li><a href="#pillars">Pillars</a></li>
     <li><a href="#interests">Interests</a></li>
@@ -294,7 +300,9 @@ footer {
 
 <!-- HERO with Three.js canvas -->
 <div class="hero">
-  <canvas id="pyramid-canvas"></canvas>
+  <canvas id="pyramid-canvas">
+    <p style="color:#e8e2d9;text-align:center;padding:2rem;">Your browser does not support WebGL. Please try a modern browser.</p>
+  </canvas>
 
   <div class="hero-overlay">
     <div class="stars">
@@ -372,11 +380,13 @@ footer {
 <script>
 (function(){
   const canvas = document.getElementById('pyramid-canvas');
-  const W = canvas.clientWidth  || window.innerWidth;
-  const H = canvas.clientHeight || window.innerHeight;
+  if(!canvas || !window.THREE) return;
 
   /* ── RENDERER ── */
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  } catch(e) { return; }
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
@@ -388,16 +398,15 @@ footer {
   scene.background = new THREE.Color(0x0a0a0a);
 
   /* ── CAMERA ── */
+  // FOV 42° keeps pyramid large without distortion; z=11 frames a 2.6-radius cone at full height
+  const CAM_Z_DEFAULT = 11;
   const camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 200);
-  camera.position.set(0, 3.5, 11);
+  camera.position.set(0, 3.5, CAM_Z_DEFAULT);
   camera.lookAt(0, 0.5, 0);
 
   /* ── COLOURS ── */
   const RED    = 0xd42020;
   const BLUE   = 0x4a7fd4;
-  const WHITE  = 0xffffff;
-  const OFFWHT = 0x1a1a1a;
-  const GOLD   = 0xc9a84c;
 
   /* ── PYRAMID GEOMETRY ── */
   // Egyptian: 4-sided base, apex above centre
@@ -509,6 +518,7 @@ footer {
     velX = dy * 0.005;
     velY = dx * 0.005;
     rotX += velX; rotY += velY;
+    // Clamp vertical rotation: -0.5 prevents flipping under base, 0.7 keeps apex in view
     rotX = Math.max(-0.5, Math.min(0.7, rotX));
     prevX = e.clientX; prevY = e.clientY;
   });
@@ -517,7 +527,7 @@ footer {
   canvas.addEventListener('touchstart', e=>{ isDragging=true; prevX=e.touches[0].clientX; prevY=e.touches[0].clientY; });
   canvas.addEventListener('touchend',   ()=>{ isDragging=false; });
   canvas.addEventListener('touchmove',  e=>{
-    if(!isDragging) return;
+    if(!isDragging || !e.touches.length) return;
     const dx = e.touches[0].clientX - prevX;
     const dy = e.touches[0].clientY - prevY;
     velX = dy * 0.005; velY = dx * 0.005;
@@ -526,7 +536,7 @@ footer {
     prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
   });
 
-  // Scroll to zoom
+  // Scroll to zoom; clamp between close-up (5) and wide (18)
   window.addEventListener('wheel', e=>{
     camera.position.z = Math.max(5, Math.min(18, camera.position.z + e.deltaY * 0.01));
   });
@@ -540,8 +550,12 @@ footer {
 
   /* ── ANIMATE ── */
   let t = 0;
+  let animPaused = false;
+  document.addEventListener('visibilitychange', ()=>{ animPaused = document.hidden; });
+
   function animate(){
     requestAnimationFrame(animate);
+    if(animPaused) return;
     t += 0.008;
 
     if(!isDragging){
@@ -579,8 +593,7 @@ footer {
     cursor.style.left=mx+'px'; cursor.style.top=my+'px';
   });
   (function loop(){
-    rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    if(!animPaused){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
     requestAnimationFrame(loop);
   })();
 
