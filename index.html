@@ -622,6 +622,10 @@ footer {
   }
   animate();
 
+})();
+
+/* Runs separately from the scene above, so it still works if Three.js or WebGL is unavailable */
+(function(){
   /* ── CURSOR ── */
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursor-ring');
@@ -631,7 +635,7 @@ footer {
     cursor.style.left=mx+'px'; cursor.style.top=my+'px';
   });
   (function loop(){
-    if(!animPaused){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
+    if(!document.hidden){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
     requestAnimationFrame(loop);
   })();
 
