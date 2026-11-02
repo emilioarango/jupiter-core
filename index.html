@@ -164,7 +164,7 @@ body {
   transform:translateX(-50%);
   display:flex; flex-direction:column; align-items:center; gap:6px;
   z-index:10; pointer-events:none;
-  animation: fadeUp 1s ease 1.5s both;
+  animation: fadeUpCentered 1s ease 1.5s both;
 }
 .scroll-hint span {
   font-family:'IM Fell English',serif; font-style:italic;
@@ -179,12 +179,12 @@ body {
 
 /* DRAG HINT */
 .drag-hint {
-  position:absolute; bottom:4.5rem; left:50%;
+  position:absolute; bottom:6.5rem; left:50%;
   transform:translateX(-50%);
   font-family:'IM Fell English',serif; font-style:italic;
   font-size:0.62rem; letter-spacing:0.22em; color:var(--muted);
   z-index:10; pointer-events:none;
-  animation: fadeUp 1s ease 2s both;
+  animation: fadeUpCentered 1s ease 2s both;
   white-space: nowrap;
 }
 
@@ -296,6 +296,7 @@ footer {
 .footer-copy  { font-family:'IM Fell English',serif; font-style:italic; font-size:0.65rem; color:var(--muted); letter-spacing:0.08em; }
 
 @keyframes fadeUp{ from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUpCentered{ from{opacity:0;transform:translate(-50%,22px)} to{opacity:1;transform:translate(-50%,0)} }
 
 .reveal { opacity:0; transform:translateY(26px); transition:opacity 0.85s ease, transform 0.85s cubic-bezier(0.16,1,0.3,1); }
 .reveal.visible { opacity:1; transform:translateY(0); }
