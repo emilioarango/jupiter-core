@@ -1,0 +1,3 @@
+three.min.js is Three.js r128 (MIT), vendored from the upstream three.js distribution
+to remove the cdnjs.cloudflare.com runtime dependency.
+Copyright 2010-2021 Three.js Authors. SPDX-License-Identifier: MIT
